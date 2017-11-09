@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"xcl"
 
-	"github.com/ReconfigureIO/crypto/md5/host"
 	"github.com/gin-gonic/gin"
 )
 
