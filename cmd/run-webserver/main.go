@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"xcl"
 
+	"github.com/ReconfigureIO/crypto/md5/host"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,7 +26,7 @@ func main() {
 	r.GET("/md5/:input", func(c *gin.Context) {
 		input := c.Param("input")
 		hash := GetMD5Hash(input)
-		fpgaHash := GetMD5HashFPGA(world, program, input)
+		fpgaHash := GetMD5HashFPGA(world, *program, input)
 		c.String(http.StatusOK, "CPU says: %s, FPGA says: %s", hash, fpgaHash)
 
 	})
