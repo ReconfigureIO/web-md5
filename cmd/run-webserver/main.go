@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,7 +19,6 @@ func main() {
 		c.String(200, webTemplate)
 	})
 	r.POST("/md5", func(c *gin.Context) {
-		time.Sleep(time.Second * 2)
 		input := c.PostForm("input")
 		hash := GetMD5Hash(input)
 		fpgaHash := GetMD5HashFPGA(input)
