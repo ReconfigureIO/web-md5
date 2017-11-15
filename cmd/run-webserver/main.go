@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,7 +24,11 @@ func main() {
 		c.String(http.StatusOK, "CPU says: %s, FPGA says: %s", hash, fpgaHash)
 
 	})
-	r.Run(":80") // listen and serve on 0.0.0.0:80
+	var port = "80"
+	if p := os.Getenv("PORT"); p != "" {
+		port = p
+	}
+	r.Run(":" + port) // listen and serve on 0.0.0.0:80
 
 }
 
