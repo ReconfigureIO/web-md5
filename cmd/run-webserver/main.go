@@ -77,7 +77,7 @@ const webTemplate = `
 	</head>
 	<body>
 		<div><img src="https://reconfigure.io/assets/dist/img/global/logo.svg" /></div>
-		<h2 style="color: #e9ab70;">MD5 Generator</h2>
+		<h2 style="color: #e9ab70;">FPGA based MD5 Generator</h2>
 		<div>
 			<p>Enter your text in the box on the left and click GENERATE to see the MD5 hash.</p>
 			<table>
