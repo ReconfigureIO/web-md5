@@ -1,12 +1,20 @@
 package main
 
 import (
-	"crypto/md5"
+	"encoding/binary"
 	"encoding/hex"
+	"log"
 	"net/http"
 	"os"
+	"xcl"
 
+	"github.com/ReconfigureIO/crypto/md5/host"
 	"github.com/gin-gonic/gin"
+)
+
+var (
+	world   xcl.World
+	program *xcl.Program
 )
 
 func main() {
@@ -20,9 +28,8 @@ func main() {
 	})
 	r.POST("/md5", func(c *gin.Context) {
 		input := c.PostForm("input")
-		hash := GetMD5Hash(input)
 		fpgaHash := GetMD5HashFPGA(input)
-		c.JSON(http.StatusOK, map[string]string{"cpu": hash, "fpga": fpgaHash, "input": input})
+		c.JSON(http.StatusOK, map[string]string{"fpga": fpgaHash, "input": input})
 	})
 	var port = "80"
 	if p := os.Getenv("PORT"); p != "" {
@@ -32,10 +39,46 @@ func main() {
 
 }
 
-func GetMD5Hash(text string) string {
-	hasher := md5.New()
-	hasher.Write([]byte(text))
-	return hex.EncodeToString(hasher.Sum(nil))
+func SetupFPGA() {
+	world = xcl.NewWorld()
+	program = world.Import("kernel_test")
+
+}
+
+func GetMD5HashFPGA(text string) string {
+	krnl := program.GetKernel("reconfigure_io_sdaccel_builder_stub_0_1")
+	defer krnl.Release()
+
+	msg := host.Pad([]byte(text))
+	msgSize := binary.Size(msg)
+
+	inputBuff := world.Malloc(xcl.ReadOnly, uint(msgSize))
+	defer inputBuff.Free()
+
+	outputBuff := world.Malloc(xcl.ReadOnly, 16)
+	defer outputBuff.Free()
+
+	binary.Write(inputBuff.Writer(), binary.LittleEndian, msg)
+	numBlocks := uint32(msgSize / 64)
+
+	krnl.SetArg(0, numBlocks)
+	krnl.SetMemoryArg(1, inputBuff)
+	krnl.SetMemoryArg(2, outputBuff)
+
+	krnl.Run(1, 1, 1)
+
+	ret := make([]byte, 16)
+	err := binary.Read(outputBuff.Reader(), binary.LittleEndian, ret)
+	if err != nil {
+		log.Fatal("binary.Read failed:", err)
+	}
+
+	return hex.EncodeToString(ret)
+}
+
+func CleanupFPGA() {
+	program.Release()
+	world.Release()
 }
 
 const webTemplate = `
@@ -92,7 +135,6 @@ const webTemplate = `
 		</div>
 
 		<div style="font-family: Monospace; display: none; padding-top: 10px;" id="resultDiv">
-			CPU: &nbsp;<span id="cpu"></span> <br />
 			FPGA: <span id="fpga"></span>
 		</div>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
