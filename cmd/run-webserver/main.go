@@ -114,7 +114,7 @@ const webTemplate = `
 				min-height: 100px;
 			}
 			#output {
-				min-height: 200px;
+				min-height: 100px;
 			}
 		</style>
 	</head>
