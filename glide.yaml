@@ -4,3 +4,5 @@ import:
   subpackages:
   - md5
 - package: github.com/gin-gonic/gin
+- package: github.com/ReconfigureIO/sdaccel
+  version: ~0.15.1

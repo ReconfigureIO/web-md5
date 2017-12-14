@@ -1,5 +1,5 @@
-hash: fb4ad0ce2883f854b7a31c94ed608a42bc8ac71114032b6a2eef71d93cced0f4
-updated: 2017-11-09T09:34:03.237182851-06:00
+hash: f27618b3cf45ae3e1f21b4d15ce2660e7424572d47b0b419d5eb015f31d3ded2
+updated: 2017-12-14T16:08:30.083817418Z
 imports:
 - name: github.com/gin-contrib/sse
   version: 22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae
@@ -16,21 +16,28 @@ imports:
 - name: github.com/json-iterator/go
   version: b1b003864e6d16e27a543216770f74dda086fbb9
 - name: github.com/mattn/go-isatty
-  version: 6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c
+  version: 57fdcb988a5c543893cc61bce354a6e24ab70022
 - name: github.com/ReconfigureIO/crypto
   version: b049ae1e9ced35c51587f3af3f3fa66bff3c3739
   subpackages:
   - md5
+  - md5/host
+- name: github.com/ReconfigureIO/sdaccel
+  version: e93e5713d49cc1354dcd1d35cfaef85ba151e0a3
+  subpackages:
+  - axi/memory
+  - axi/protocol
+  - xcl
 - name: github.com/ugorji/go
   version: 00a57e09e383d445aeef6c6cd642969dc4360231
   subpackages:
   - codec
 - name: golang.org/x/sys
-  version: 4b45465282a4624cf39876842a017334f13b8aff
+  version: f3918c30c5c2cb527c0b071a27c35120a6c0719a
   subpackages:
   - unix
 - name: gopkg.in/go-playground/validator.v8
   version: 5f1438d3fca68893a817e4a66806cea46a9e4ebf
 - name: gopkg.in/yaml.v2
-  version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
+  version: cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b
 testImports: []

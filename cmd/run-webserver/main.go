@@ -3,10 +3,10 @@ package main
 import (
 	"encoding/binary"
 	"encoding/hex"
+	"github.com/ReconfigureIO/sdaccel/xcl"
 	"log"
 	"net/http"
 	"os"
-	"xcl"
 
 	"github.com/ReconfigureIO/crypto/md5/host"
 	"github.com/gin-gonic/gin"
