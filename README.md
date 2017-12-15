@@ -3,7 +3,7 @@ web-md5
 
 [![Build Status](https://travis-ci.org/ReconfigureIO/web-md5.svg?branch=master)](https://travis-ci.org/ReconfigureIO/web-md5)
 
-An example kernel that is a web-accessible accelerate md5
+An example [Reconfigure.io](https://reconfigure.io) project to provide a website that uses an FPGA to calculate MD5 hashes.
 
 Contributing
 ------------
