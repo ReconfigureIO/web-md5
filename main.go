@@ -1,6 +1,3 @@
-// DO NOT EDIT.
-// Generate with: go run gen.go -output main.go
-
 package main
 
 import (
