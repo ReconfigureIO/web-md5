@@ -21,7 +21,12 @@ func main() {
 	SetupFPGA()
 	defer CleanupFPGA()
 
+	//remove release mode warning
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
+	//retain logging of requests
+	r.Use(gin.Logger())
+
 	r.GET("/", func(c *gin.Context) {
 		c.Header("Content-type", "text/html")
 		c.String(200, webTemplate)
